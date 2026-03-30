@@ -1,0 +1,53 @@
+1. if __name__ == '__main__':
+    # Read integers a and b from input
+    a = int(input())
+    b = int(input())
+    
+    # 1. Print the result of integer division
+    print(a // b)
+    
+    # 2. Print the result of float division
+    print(a / b)
+
+
+2.if __name__ == '__main__':
+    # Reading integers a and b from input
+    a = int(input())
+    b = int(input())
+    
+    # 1. Print the sum of the two numbers
+    print(a + b)
+    
+    # 2. Print the difference of the two numbers (first - second)
+    print(a - b)
+    
+    # 3. Print the product of the two numbers
+    print(a * b)
+
+3.import math
+import os
+import random
+import re
+import sys
+
+if __name__ == '__main__':
+    # Read the input integer
+    n = int(input().strip())
+
+    # 1. If n is odd, print Weird
+    if n % 2 != 0:
+        print("Weird")
+    else:
+        # If we are here, n is even. Now check the ranges:
+        # 2. If n is even and in range 2-5
+        if 2 <= n <= 5:
+            print("Not Weird")
+        # 3. If n is even and in range 6-20
+        elif 6 <= n <= 20:
+            print("Weird")
+        # 4. If n is even and greater than 20
+        elif n > 20:
+            print("Not Weird")
+
+4.my_string = "Hello, World!"
+print(my_string)
