@@ -1,0 +1,16 @@
+class Solution:
+    def canJump(self, nums):
+        if not nums:
+            return False
+        n = len(nums)
+        reach = 0
+        for i in range(n):
+            # if current index is beyond what we can reach, fail early
+            if i > reach:
+                return False
+            # extend the farthest reachable index
+            reach = max(reach, i + nums[i])
+            # optional early exit when we can already reach the end
+            if reach >= n - 1:
+                return True
+        return False
