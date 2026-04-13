@@ -1,0 +1,35 @@
+class Solution:
+    def groupAnagrams(self, strs):
+        """
+        Groups anagrams together from an array of strings.
+        An anagram is a word formed by rearranging the letters of a different word.
+        Compatible with Python 2.7 and Python 3.x.
+        """
+        anagram_map = {}
+        
+        for s in strs:
+            # Sort the characters of the string to create a unique key for all anagrams
+            # "".join(sorted(s)) will be the same for "eat", "tea", and "ate"
+            sorted_s = "".join(sorted(s))
+            
+            # Check if this sorted key already exists in our map
+            if sorted_s not in anagram_map:
+                anagram_map[sorted_s] = []
+            
+            # Add the original string to its corresponding anagram group
+            anagram_map[sorted_s].append(s)
+            
+        return list(anagram_map.values())
+
+if __name__ == "__main__":
+    sol = Solution()
+    
+    strs1 = ["eat","tea","tan","ate","nat","bat"]
+    print("Example 1 Output:", sol.groupAnagrams(strs1))
+    # Expected: [["eat", "tea", "ate"], ["tan", "nat"], ["bat"]]
+    
+    strs2 = [""]
+    print("Example 2 Output:", sol.groupAnagrams(strs2))
+    
+    strs3 = ["a"]
+    print("Example 3 Output:", sol.groupAnagrams(strs3))
