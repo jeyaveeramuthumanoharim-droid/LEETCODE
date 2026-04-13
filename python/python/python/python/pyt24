@@ -1,0 +1,30 @@
+class Solution:
+    def multiply(self, num1, num2): # Removed : str and -> str
+        """
+        Multiplies two string numbers for Python 2.7+
+        """
+        if num1 == "0" or num2 == "0":
+            return "0"
+        
+        n1, n2 = len(num1), len(num2)
+        res = [0] * (n1 + n2)
+        
+        for i in range(n1 - 1, -1, -1):
+            for j in range(n2 - 1, -1, -1):
+                # ord() works the same in Python 2 and 3
+                d1 = ord(num1[i]) - ord('0')
+                d2 = ord(num2[j]) - ord('0')
+                
+                mul = d1 * d2
+                p1, p2 = i + j, i + j + 1
+                
+                total = mul + res[p2]
+                res[p2] = total % 10
+                res[p1] += total // 10
+        
+        result_str = []
+        for digit in res:
+            if not (not result_str and digit == 0):
+                result_str.append(str(digit))
+        
+        return "".join(result_str)
