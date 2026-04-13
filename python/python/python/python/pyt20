@@ -1,0 +1,44 @@
+class Solution:
+    def permuteUnique(self, nums):
+        """
+        Returns all possible unique permutations of an array that may contain duplicates.
+        Uses a backtracking approach with sorting and pruning.
+        Compatible with Python 2.7 and Python 3.x.
+        """
+        results = []
+        nums.sort()
+        
+        used = [False] * len(nums)
+        
+        def backtrack(current_permutation):
+            if len(current_permutation) == len(nums):
+                results.append(list(current_permutation))
+                return
+            
+            for i in range(len(nums)):
+                if used[i]:
+                    continue
+                
+                if i > 0 and nums[i] == nums[i-1] and not used[i-1]:
+                    continue
+                
+                used[i] = True
+                current_permutation.append(nums[i])
+                
+                backtrack(current_permutation)
+                
+                current_permutation.pop()
+                used[i] = False
+        
+        backtrack([])
+        return results
+
+if __name__ == "__main__":
+    sol = Solution()
+    
+    
+    print("Input: [1,1,2]")
+    print("Output:", sol.permuteUnique([1,1,2]))
+    
+    print("\nInput: [1,2,3]")
+    print("Output:", sol.permuteUnique([1,2,3]))
