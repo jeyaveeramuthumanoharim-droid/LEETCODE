@@ -1,0 +1,24 @@
+class Solution:
+    def combinationSum(self, candidates, target):
+        """
+        Find all unique combinations that sum to target.
+        Each candidate can be used unlimited times.
+        """
+        result = []
+        candidates.sort()  # Sort to enable pruning
+        
+        def backtrack(start, current, curr_sum):
+            if curr_sum == target:
+                result.append(current[:])  # Add copy
+                return
+            
+            if curr_sum > target:
+                return
+            
+            for i in range(start, len(candidates)):
+                current.append(candidates[i])
+                backtrack(i, current, curr_sum + candidates[i])
+                current.pop()  # Backtrack
+        
+        backtrack(0, [], 0)
+        return result
