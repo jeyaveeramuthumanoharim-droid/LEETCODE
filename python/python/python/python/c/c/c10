@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char* simplifyPath(char* path) {
+    int n = strlen(path);
+    
+    char** stack = (char**)malloc(sizeof(char*) * n);
+    int top = -1;
+    
+    int i = 0;
+    while (i < n) {
+        while (i < n && path[i] == '/') {
+            i++;
+        }
+        
+        if (i >= n) break;
+        
+        int j = i;
+        while (j < n && path[j] != '/') {
+            j++;
+        }
+        
+        int len = j - i;
+        char* component = (char*)malloc(sizeof(char) * (len + 1));
+        strncpy(component, path + i, len);
+        component[len] = '\0';
+        
+        if (strcmp(component, ".") == 0) {
+            free(component);
+        } else if (strcmp(component, "..") == 0) {
+            if (top >= 0) {
+                free(stack[top--]);  // Pop from stack
+            }
+        } else {
+            stack[++top] = component;  // Push to stack
+        }
+        
+        i = j;  // Move to next component
+    }
+    
+    char* result = (char*)malloc(sizeof(char) * (n + 2));
+    result[0] = '/';
+    result[1] = '\0';
+    
+    for (int k = 0; k <= top; k++) {
+        strcat(result, "/");
+        strcat(result, stack[k]);
+        free(stack[k]);
+    }
+    
+    free(stack);
+    return result;
+}
+
+int main() {
+    // Test cases
+    char* paths[] = {
+        "/home/",
+        "/home//foo/",
+        "/home/user/Documents/../Pictures",
+        "/../",
+        "/.../a/../b/c/../d/./"
+    };
+    
+    for (int i = 0; i < 5; i++) {
+        char* result = simplifyPath(paths[i]);
+        printf("Input:  \"%s\"\n", paths[i]);
+        printf("Output: \"%s\"\n\n", result);
+        free(result);
+    }
+    
+    return 0;
+}
