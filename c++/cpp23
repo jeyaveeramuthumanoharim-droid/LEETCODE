@@ -1,0 +1,30 @@
+#include <iostream> 
+#include <string>   
+
+int main() {
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(NULL);
+
+    std::string a, b;
+
+    std::cin >> a >> b;
+
+    std::cout << a.size() << " " << b.size() << std::endl;
+
+    std::cout << a + b << std::endl;
+
+    std::string a_swapped = a;
+    std::string b_swapped = b;
+
+    if (!a_swapped.empty() && !b_swapped.empty()) {
+        char temp = a_swapped[0];
+        a_swapped[0] = b_swapped[0];
+        b_swapped[0] = temp;
+    } else if (!a_swapped.empty() && b_swapped.empty()) {
+    } else if (a_swapped.empty() && !b_swapped.empty()) {
+    }
+
+    std::cout << a_swapped << " " << b_swapped << std::endl;
+
+    return 0;
+}
