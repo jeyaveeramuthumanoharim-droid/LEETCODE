@@ -1,0 +1,54 @@
+#include<iostream>
+using namespace std;
+class book
+{
+   int access_no;
+   int price;
+   string title;
+   int copies;
+   int total_books;
+   public:
+      book()
+      {
+         access_no=0;
+         price=0;
+         title=" ";
+         copies=0;
+         total_books=0;
+      }
+      ~book()
+      {
+      }
+      void getdata()
+      {
+         cout<<"enter the access_no of book:";
+         cin>>access_no;
+         cout<<"enter the price of book:";
+         cin>>price;
+         cout<<"enter the title of book:";
+         cin>>title;
+         cout<<"enter the copies of book:";
+         cin>>copies;
+         cout<<"enter the total worth of the books:";
+         cin>>total_books;
+      }
+      int getprice()
+      {
+         return price;
+      }
+      int getcopies()
+      {
+         return copies;
+      }
+};
+   int main()
+   {
+      int p,q;
+      book b1;
+      b1.getdata();
+      p= b1.getprice();
+      q= b1.getcopies();
+      cout<<"total worth of books available:\n"<<p*q;
+      return 0;
+   }
+
