@@ -1,0 +1,39 @@
+#include <iostream> 
+#include <map>      
+#include <string>   
+
+int main() {
+    // Optimize C++ standard streams for faster input/output
+    std::ios_base::sync_with_stdio(false);
+    std::cin.tie(NULL);
+
+    int q; 
+    std::cin >> q;
+
+    std::map<std::string, int> student_marks;
+
+    for (int i = 0; i < q; ++i) {
+        int type;
+        std::cin >> type;
+
+        if (type == 1) {
+            std::string name;
+            int marks;
+            std::cin >> name >> marks;
+            student_marks[name] += marks;
+        } else if (type == 2) {
+            // Type 2: Erase marks of a student
+            std::string name;
+            std::cin >> name;
+            student_marks.erase(name);
+        } else if (type == 3) {
+            std::string name;
+            std::cin >> name;
+            std::cout << student_marks[name] << "\n";
+        }
+    }
+
+    return 0;
+}
+
+
