@@ -1,0 +1,39 @@
+#include <vector>
+#include <string>
+using namespace std;
+
+class Solution {
+public:
+    bool exist(vector<vector<char>>& board, const string& word) {
+        int m = board.size();
+        if (m == 0) return false;
+        int n = board[0].size();
+        for (int i = 0; i < m; ++i)
+            for (int j = 0; j < n; ++j)
+                if (dfs(board, word, 0, i, j))
+                    return true;
+        return false;
+    }
+
+private:
+    bool dfs(vector<vector<char>>& board, const string& word, int idx, int r, int c) {
+        if (idx == (int)word.size()) return true;
+        int m = board.size(), n = board[0].size();
+        if (r < 0 || r >= m || c < 0 || c >= n) return false;
+        if (board[r][c] != word[idx]) return false;
+
+        char saved = board[r][c];
+        board[r][c] = '#'; 
+
+        static const int dr[4] = {-1,1,0,0};
+        static const int dc[4] = {0,0,-1,1};
+        bool found = false;
+        for (int k = 0; k < 4 && !found; ++k) {
+            if (dfs(board, word, idx + 1, r + dr[k], c + dc[k]))
+                found = true;
+        }
+
+        board[r][c] = saved; 
+        return found;
+    }
+};
