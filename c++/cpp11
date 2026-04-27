@@ -1,0 +1,36 @@
+#include <iostream>
+
+
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode dummy(0);
+        dummy.next = head;
+        ListNode* prev = &dummy;
+        ListNode* cur = head;
+
+        while (cur) {
+            bool hasDup = false;
+            while (cur->next && cur->val == cur->next->val) {
+                hasDup = true;
+                cur = cur->next;
+            }
+            if (hasDup) {
+                prev->next = cur->next;
+                cur = cur->next;
+            } else {
+                // Current value is unique; move forward
+                prev = prev->next;
+                cur = cur->next;
+            }
+        }
+        return dummy.next;
+    }
+};
+
+void printList(ListNode* head) {
+    for (ListNode* p = head; p; p = p->next) {
+        std::cout << p->val << (p->next ? " -> " : "\n");
+    }
+}
+
