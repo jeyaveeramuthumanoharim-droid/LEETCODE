@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+class car
+{
+   string brand;
+   string model;
+   int year;
+   int price;
+   public:
+   car()
+   {
+      brand=" ";
+      model=" ";
+      year=0;
+      price=0;
+   }
+   void getdata()
+   {
+      cout<<"enter the car brand";
+      cin>>brand;
+      cout<<"enter the car model";
+      cin>>model;
+      cout<<"enter the car year";
+      cin>>year;
+      cout<<"enter the car price";
+      cin>>price;
+   }
+   void printdata()
+   {
+      cout<<"\nbrand:"<<brand;
+      cout<<"\nmodel:"<<model;
+      cout<<"\nyear:"<<year;
+      cout<<"\nprice:"<<price;
+   }
+   ~car()
+   {
+   }
+};
+   int main()
+   {
+      car c1;
+      c1.getdata();
+      c1.printdata();
+   }
