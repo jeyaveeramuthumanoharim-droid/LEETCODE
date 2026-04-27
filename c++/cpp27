@@ -1,0 +1,98 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <stack>
+#include <algorithm> 
+
+std::map<std::string, std::string> parse_tag_attributes(const std::string& line) {
+    std::map<std::string, std::string> attributes;
+    size_t pos = line.find(' ');
+
+    if (pos == std::string::npos) { 
+        return attributes;
+    }
+
+    std::string attr_string = line.substr(pos + 1); 
+    attr_string.pop_back(); 
+
+    size_t start = 0;
+    while ((start = attr_string.find_first_not_of(" ", start)) != std::string::npos) {
+        size_t name_end = attr_string.find(" = ", start);
+        if (name_end == std::string::npos) break;
+
+        std::string name = attr_string.substr(start, name_end - start);
+
+        size_t value_start = attr_string.find("\"", name_end + 3);
+        if (value_start == std::string::npos) break;
+
+        size_t value_end = attr_string.find("\"", value_start + 1);
+        if (value_end == std::string::npos) break;
+
+        std::string value = attr_string.substr(value_start + 1, value_end - (value_start + 1));
+
+        attributes[name] = value;
+        start = value_end + 1; 
+    }
+    return attributes;
+}
+
+int main() {
+    std::ios_base::sync_with_stdio(false); 
+    std::cin.tie(NULL);                   
+
+    int n, q;
+    std::cin >> n >> q;
+    std::cin.ignore(); 
+
+    
+    std::map<std::string, std::map<std::string, std::string>> hrml_attributes;
+    std::stack<std::string> current_tag_path_stack;
+
+  
+    for (int i = 0; i < n; ++i) {
+        std::string line;
+        std::getline(std::cin, line);
+
+        if (line.substr(0, 2) == "</") { 
+            if (!current_tag_path_stack.empty()) {
+                current_tag_path_stack.pop();
+            }
+        } else { 
+            size_t tag_name_start = line.find('<') + 1;
+            size_t tag_name_end = line.find(' ', tag_name_start);
+            if (tag_name_end == std::string::npos) { 
+                tag_name_end = line.find('>', tag_name_start);
+            }
+            std::string tag_name = line.substr(tag_name_start, tag_name_end - tag_name_start);
+
+            std::string full_current_path;
+            if (!current_tag_path_stack.empty()) {
+                full_current_path = current_tag_path_stack.top() + "." + tag_name;
+            } else {
+                full_current_path = tag_name;
+            }
+            current_tag_path_stack.push(full_current_path);
+
+            std::map<std::string, std::string> attributes = parse_tag_attributes(line);
+            hrml_attributes[full_current_path] = attributes;
+        }
+    }
+
+    for (int i = 0; i < q; ++i) {
+        std::string query;
+        std::getline(std::cin, query);
+
+        size_t tilde_pos = query.find('~');
+        std::string tag_path = query.substr(0, tilde_pos);
+        std::string attr_name = query.substr(tilde_pos + 1);
+
+        if (hrml_attributes.count(tag_path) && hrml_attributes[tag_path].count(attr_name)) {
+            std::cout << hrml_attributes[tag_path][attr_name] << std::endl;
+        } else {
+            std::cout << "Not Found!" << std::endl;
+        }
+    }
+
+    return 0;
+}
