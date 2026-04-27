@@ -1,0 +1,51 @@
+  1 #include <iostream>
+  2 using namespace std;
+  3 class maximum;
+  4 class avg
+  5 {
+  6 private:
+  7     int numA;
+  8 public:
+  9     avg()
+ 10     {
+ 11         cout << "Enter the number: " << endl;
+ 12         cin >> numA;
+ 13     }
+ 14     int getNumA()
+ 15     {
+ 16         return numA;
+ 17     }
+ 18     friend class maximum;
+ 19 };
+ 20 class maximum
+ 21 {
+ 22 private:
+ 23     int numB;
+ 24 public:
+ 25     maximum()
+ 26     {
+ 27         cout << "Enter second number: " << endl;
+ 28         cin >> numB;
+ 29     }
+ 30     int getNumB()
+ 31     {
+ 32         return numB;
+ 33     }
+ 34     int average(avg& a)
+ 35     {
+ 36         return (a.numA + numB) / 2;
+ 37     }
+ 38     void great(avg& a)
+ 39     {
+ 40         if (a.numA >= numB)
+ 41             cout << "Greatest number: " << a.numA << endl;
+ 42         else
+ 43             cout << "Greatest number: " << numB << endl;
+ 44     }
+ 45 };
+ 46 int main()
+ 47 {
+ 48     avg a1;
+ 49     maximum m1;
+ 50     int avgVal = m1.average(a1);
+ 51     cout << "Average: " << avgVal << endl;
