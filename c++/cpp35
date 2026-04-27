@@ -1,0 +1,24 @@
+#include <iostream>
+#include <cstdio>  
+
+using namespace std;
+
+int main() {
+    int integer_val;
+    long long long_long_val;
+    char char_val;
+    float float_val;
+    double double_val;
+
+    
+    cin >> integer_val >> long_long_val >> char_val >> float_val >> double_val;
+
+    
+    cout << integer_val << endl;
+    cout << long_long_val << endl;
+    cout << char_val << endl;
+    printf("%.3f\n", float_val); 
+    printf("%.9f\n", double_val); 
+
+    return 0;
+}
