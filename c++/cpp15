@@ -1,0 +1,30 @@
+#include <vector>
+#include <string>
+using namespace std;
+
+class Solution {
+public:
+    vector<string> restoreIpAddresses(const string& s) {
+        vector<string> res;
+        vector<string> path;
+        dfs(s, 0, 4, path, res);
+        return res;
+    }
+
+private:
+    void dfs(const string& s, int idx, int partsLeft, vector<string>& path, vector<string>& res) {
+        int n = (int)s.size();
+        if (partsLeft == 0 && idx == n) {
+            string ip;
+            for (size_t i = 0; i < path.size(); ++i) {
+                if (i) ip.push_back('.');
+                ip += path[i];
+            }
+            res.push_back(ip);
+            return;
+        }
+        if (partsLeft == 0 || idx >= n) return;
+
+        for (int len = 1; len <= 3; ++len) {
+            if (idx + len > n) break;
+
